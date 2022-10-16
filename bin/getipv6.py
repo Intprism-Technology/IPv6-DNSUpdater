@@ -10,7 +10,7 @@ def result():
             result_ip = os.system('ip a | grep "inet6 2"')
         except Exception as e:
             print("Error {}").format(str(e))
-    result_ip = result_ip.split("inet6 ")[1].split("/")[0]
+    result_ip = result_ip.split("    inet6 ")[1].split("/")[0]
     if(ipaddress.ip_address(result_ip).is_global != True):
         return "failed"
     return result_ip
