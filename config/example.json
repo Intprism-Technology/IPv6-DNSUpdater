@@ -1,0 +1,11 @@
+{
+    "cloudflare" : {
+        "email" : "mail here",
+        "token" : "token here",
+        "ip" : "AAAA"
+    },
+    "records" : [
+        "foo.tld",
+        "foofoo.tld"
+    ]
+}
