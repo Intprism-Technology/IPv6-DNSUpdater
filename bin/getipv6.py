@@ -1,16 +1,9 @@
 def result():
     import ipaddress
-    import os
+    import subprocess
     
-    try:
-        result_ip = os.system('ip a | grep "inet6 2"')
-    except:
-        os.system('apt update && apt install -y iproute2')
-        try:
-            result_ip = os.system('ip a | grep "inet6 2"')
-        except Exception as e:
-            print("Error {}").format(str(e))
-    result_ip = result_ip.split("    inet6 ")[1].split("/")[0]
+    direct_output = subprocess.check_output('ip a | grep "inet6 2"', shell=True)
+    result_ip = direct_output.decode("utf-8").split("    inet6 ")[1].split("/")[0]
     if(ipaddress.ip_address(result_ip).is_global != True):
         return "failed"
     return result_ip
