@@ -70,7 +70,7 @@ def do_dns_update(zone_name, zone_id, ip_address, ip_address_type):
 while True:
     # Update Repo
     update_repo = subprocess.check_output('cd /root/DNSUpdater && git pull', shell=True)
-    print("[INFO] Application update status: {}".format(update_repo.decode("utf-8")))
+    print("[INFO] Application update status: {}".format(update_repo.decode("utf-8").strip()))
     if(getipv6.result() != "failed"):
         print("[INFO] Public IPv6: [{}]".format(getipv6.result()))
         print("[INFO] Reading config DNS Record")
