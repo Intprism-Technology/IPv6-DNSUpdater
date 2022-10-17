@@ -10,9 +10,7 @@ import time
 import os
 import json
 import CloudFlare
-
-# Update Repo
-os.system('cd /root/DNSUpdater && git pull')
+import subprocess
 
 # Function Cloudflare
 def do_dns_update(zone_name, zone_id, ip_address, ip_address_type):
@@ -70,6 +68,9 @@ def do_dns_update(zone_name, zone_id, ip_address, ip_address_type):
         return
 
 while True:
+    # Update Repo
+    update_repo = subprocess.check_output('cd /root/DNSUpdater && git pull', shell=True)
+    print("[INFO] Application update status: {}".format(update_repo.decode("utf-8")))
     if(getipv6.result() != "failed"):
         print("[INFO] Public IPv6: [{}]".format(getipv6.result()))
         print("[INFO] Reading config DNS Record")
