@@ -38,12 +38,12 @@ def do_dns_update(zone_name, zone_id, ip_address, ip_address_type):
             print('       => [IGNORED]: %s %s ; wrong address family' % (dns_record['name'], old_ip_address))
             continue
 
-        if ip_address == old_ip_address:
-            print('       => [UNCHANGED]: %s %s' % (dns_record['name'], ip_address))
-            continue
-        
         if(dns_record['name'] not in config["records"]):
             print('       => [SKIPPED]: %s %s' % (dns_record['name'], ip_address))
+            continue
+
+        if ip_address == old_ip_address:
+            print('       => [UNCHANGED]: %s %s' % (dns_record['name'], ip_address))
             continue
 
         proxied_state = dns_record['proxied']
