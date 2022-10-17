@@ -11,6 +11,9 @@ import os
 import json
 import CloudFlare
 
+# Update Repo
+os.system('cd /root/DNSUpdater && git pull')
+
 # Function Cloudflare
 def do_dns_update(zone_name, zone_id, ip_address, ip_address_type):
     """Cloudflare API DNS Update"""
