@@ -76,7 +76,7 @@ while True:
         print("[INFO] Reading config DNS Record")
         for path in os.listdir("/root/DNSUpdater/config"):
             # check if current path is a file
-            if os.path.isfile(os.path.join("config", path)):
+            if os.path.isfile(os.path.join("/root/DNSUpdater/config", path)):
                 print("[INFO] Working on {} config...".format(path))
                 # Cloudflare Driver
                 try:
