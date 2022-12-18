@@ -74,7 +74,7 @@ while True:
     if(getipv6.result() != "failed"):
         print("[INFO] Public IPv6: [{}]".format(getipv6.result()))
         print("[INFO] Reading config DNS Record")
-        for path in os.listdir("config"):
+        for path in os.listdir("./config"):
             # check if current path is a file
             if os.path.isfile(os.path.join("config", path)):
                 print("[INFO] Working on {} config...".format(path))
