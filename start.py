@@ -71,6 +71,7 @@ while True:
     # Update Repo
     update_repo = subprocess.check_output('cd /root/DNSUpdater && git pull', shell=True)
     print("[INFO] Application update status: {}".format(update_repo.decode("utf-8").strip()))
+    time.sleep(5)
     if(getipv6.result() != "failed"):
         print("[INFO] Public IPv6: [{}]".format(getipv6.result()))
         print("[INFO] Reading config DNS Record")
