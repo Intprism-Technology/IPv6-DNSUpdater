@@ -91,7 +91,7 @@ if(getipv6.result() != "failed"):
             except:
                 print("[ERROR] Config file incorrect")
 else:
-    print("[ERROR] Failed get IPv6... retry in 3s")
+    print("[ERROR] Failed get IPv6... retry in next cron")
     time.sleep(3)
 print("[INFO] Complete")
 # End only cron
