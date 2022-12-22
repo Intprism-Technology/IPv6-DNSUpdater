@@ -93,7 +93,6 @@ if(getipv6.result() != "failed"):
 else:
     print("[ERROR] Failed get IPv6... retry in 3s")
     time.sleep(3)
-    continue
 print("[INFO] Complete")
 # End only cron
 # while True:
