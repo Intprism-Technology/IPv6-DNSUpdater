@@ -67,32 +67,61 @@ def do_dns_update(zone_name, zone_id, ip_address, ip_address_type):
     if updated:
         return
 
-while True:
-    # Update Repo
-    update_repo = subprocess.check_output('cd /root/DNSUpdater && git pull', shell=True)
-    print("[INFO] Application update status: {}".format(update_repo.decode("utf-8").strip()))
-    time.sleep(5)
-    if(getipv6.result() != "failed"):
-        print("[INFO] Public IPv6: [{}]".format(getipv6.result()))
-        print("[INFO] Reading config DNS Record")
-        for path in os.listdir("config"):
-            # check if current path is a file
-            if os.path.isfile(os.path.join("config", path)):
-                print("[INFO] Working on {} config...".format(path))
-                # Cloudflare Driver
-                try:
-                    print("       [{}] Connect Cloudflare API...".format(path))
-                    config = json.load(open(os.path.join("config", path)))
-                    cf = CloudFlare.CloudFlare(email=config["cloudflare"]["email"], token=config["cloudflare"]["token"])
-                    zones = cf.zones.get()
-                    for zone in zones:
-                        # print("zone_id=%s zone_name=%s" % (zone['id'], zone['name']))
-                        do_dns_update(zone['name'], zone['id'], getipv6.result(), config["cloudflare"]["ip"])
-                except:
-                    print("[ERROR] Config file incorrect")
-    else:
-        print("[ERROR] Failed get IPv6... retry in 3s")
-        time.sleep(3)
-        continue
-    print("[INFO] Complete, waiting in 30s")
-    time.sleep(30)
+# Only cron
+# Update Repo
+update_repo = subprocess.check_output('cd /root/DNSUpdater && git pull', shell=True)
+print("[INFO] Application update status: {}".format(update_repo.decode("utf-8").strip()))
+time.sleep(5)
+if(getipv6.result() != "failed"):
+    print("[INFO] Public IPv6: [{}]".format(getipv6.result()))
+    print("[INFO] Reading config DNS Record")
+    for path in os.listdir("config"):
+        # check if current path is a file
+        if os.path.isfile(os.path.join("config", path)):
+            print("[INFO] Working on {} config...".format(path))
+            # Cloudflare Driver
+            try:
+                print("       [{}] Connect Cloudflare API...".format(path))
+                config = json.load(open(os.path.join("config", path)))
+                cf = CloudFlare.CloudFlare(email=config["cloudflare"]["email"], token=config["cloudflare"]["token"])
+                zones = cf.zones.get()
+                for zone in zones:
+                    # print("zone_id=%s zone_name=%s" % (zone['id'], zone['name']))
+                    do_dns_update(zone['name'], zone['id'], getipv6.result(), config["cloudflare"]["ip"])
+            except:
+                print("[ERROR] Config file incorrect")
+else:
+    print("[ERROR] Failed get IPv6... retry in 3s")
+    time.sleep(3)
+    continue
+print("[INFO] Complete")
+# End only cron
+# while True:
+#     # Update Repo
+#     update_repo = subprocess.check_output('cd /root/DNSUpdater && git pull', shell=True)
+#     print("[INFO] Application update status: {}".format(update_repo.decode("utf-8").strip()))
+#     time.sleep(5)
+#     if(getipv6.result() != "failed"):
+#         print("[INFO] Public IPv6: [{}]".format(getipv6.result()))
+#         print("[INFO] Reading config DNS Record")
+#         for path in os.listdir("config"):
+#             # check if current path is a file
+#             if os.path.isfile(os.path.join("config", path)):
+#                 print("[INFO] Working on {} config...".format(path))
+#                 # Cloudflare Driver
+#                 try:
+#                     print("       [{}] Connect Cloudflare API...".format(path))
+#                     config = json.load(open(os.path.join("config", path)))
+#                     cf = CloudFlare.CloudFlare(email=config["cloudflare"]["email"], token=config["cloudflare"]["token"])
+#                     zones = cf.zones.get()
+#                     for zone in zones:
+#                         # print("zone_id=%s zone_name=%s" % (zone['id'], zone['name']))
+#                         do_dns_update(zone['name'], zone['id'], getipv6.result(), config["cloudflare"]["ip"])
+#                 except:
+#                     print("[ERROR] Config file incorrect")
+#     else:
+#         print("[ERROR] Failed get IPv6... retry in 3s")
+#         time.sleep(3)
+#         continue
+#     print("[INFO] Complete, waiting in 30s")
+#     time.sleep(30)
